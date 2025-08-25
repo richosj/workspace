@@ -7,6 +7,28 @@ class Project {
         return $this->pdo->query("SELECT * FROM projects ORDER BY title ASC")->fetchAll();
     }
 
+    // Project.php
+    public function count() {
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM projects");
+        return (int)$stmt->fetchColumn();
+    }
+
+    public function totalAmount() {
+        $stmt = $this->pdo->query("SELECT COALESCE(SUM(amount),0) FROM projects");
+        return (int)$stmt->fetchColumn();
+    }
+
+    public function totalBalance() {
+        $stmt = $this->pdo->query("SELECT COALESCE(SUM(balance),0) FROM projects");
+        return (int)$stmt->fetchColumn();
+    }
+
+    public function getTotalProfit() {
+        $stmt = $this->pdo->query("SELECT COALESCE(SUM(profit),0) FROM projects");
+        return (int)$stmt->fetchColumn();
+    }
+
+
     // 전체(누적) 통계
     public function statsTotal() {
         $sql = "SELECT 
